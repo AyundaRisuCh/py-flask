@@ -203,6 +203,60 @@ def test_php_convert():
 
 
 # ===========================
+# 🔹 Bedrock Amazon
+# ===========================
+from flask import Flask, request, jsonify
+import boto3
+from botocore.exceptions import BotoCoreError, ClientError
+
+app = Flask(__name__)
+
+class Converse:
+    def __init__(self):
+        self.client = boto3.client(
+            'bedrock-runtime',
+            region_name='ap-southeast-2'
+        )
+        self.model_id = 'amazon.nova-micro-v1:0'
+
+    def converse(self, user_message: str):
+        conversation = [
+            {
+                "role": "user",
+                "content": [{"text": user_message}]
+            }
+        ]
+        try:
+            response = self.client.converse(
+                modelId=self.model_id,
+                messages=conversation,
+                inferenceConfig={
+                    "maxTokens": 512,
+                    "temperature": 0.5
+                }
+            )
+            return response['output']['message']['content'][0]['text']
+        except (BotoCoreError, ClientError) as e:
+            return {"error": True, "message": str(e)}
+        except Exception as e:
+            return {"error": True, "message": str(e)}
+
+@app.route('/converse', methods=['GET', 'POST'])
+def handle_converse():
+    user_message = request.args.get('message') or request.form.get('message')
+    if not user_message:
+        return jsonify({"error": True, "message": "Parameter 'message' is required"}), 400
+
+    demo = Converse()
+    result = demo.converse(user_message)
+
+    if isinstance(result, str):
+        return result
+    else:
+        return jsonify(result), 500
+
+
+# ===========================
 # 🔹 JALANKAN SERVER
 # ===========================
 if __name__ == '__main__':
