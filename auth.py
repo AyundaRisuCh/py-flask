@@ -107,6 +107,9 @@ def insert_bencana():
         conn.close()
 
 
+# ===========================
+# 🔹 Menampilkan Bencana
+# ===========================
 from flask import Response
 import pymysql
 
