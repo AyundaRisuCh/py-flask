@@ -218,6 +218,12 @@ hasil: /usr/bin/python3
 
 ExecStart=/usr/bin/python3 app.py
 
+### Install boto3
+```bash
+pip3 install boto3
+python3 auth.py
+```
+
 ## Jalankan flask dan enable
 ```bash
 sudo systemctl daemon-reexec
@@ -227,6 +233,7 @@ sudo systemctl daemon-reload
 sudo systemctl start flask-register
 sudo systemctl enable flask-register
 ```
+
 ```bash
 sudo systemctl status flask-register
 ```
