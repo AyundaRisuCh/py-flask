@@ -5,7 +5,7 @@ app = Flask(__name__)
 
 # Konfigurasi database
 DB_CONFIG = {
-    "host": "database-2.cjqs0i4iie68.ap-southeast-2.rds.amazonaws.com",
+    "host": "py-db.cjqs0i4iie68.ap-southeast-2.rds.amazonaws.com",
     "user": "root",
     "password": "admin123#",
     "database": "sigap_db"
@@ -117,7 +117,7 @@ import pymysql
 @app.route('/bencana/terbaru', methods=['GET'])
 def tampilkan_bencana_terbaru():
     REPLICA_DB_CONFIG = {
-        "host": "test-replica.cjqs0i4iie68.ap-southeast-2.rds.amazonaws.com",
+        "host": "py-db.cjqs0i4iie68.ap-southeast-2.rds.amazonaws.com",
         "user": "root",
         "password": "admin123#",
         "database": "sigap_db"
