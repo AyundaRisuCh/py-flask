@@ -205,11 +205,9 @@ def test_php_convert():
 # ===========================
 # 🔹 Bedrock Amazon
 # ===========================
-from flask import Flask, request, jsonify
 import boto3
 from botocore.exceptions import BotoCoreError, ClientError
 
-app = Flask(__name__)
 
 class Converse:
     def __init__(self):
